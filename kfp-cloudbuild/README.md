@@ -82,7 +82,7 @@ The pipeline directory includes the following fies:
 * [workflow.py](pipeline/workflow.py): This includes the definition of the Kubeflow Pipeline.
 More specifically:
     1. Component ops are created from the **component.yaml** files, 
-using the [components.ComponentStore](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.components.html#kfp.components.ComponentStore)
+using the [kfp.components.ComponentStore](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.components.html#kfp.components.ComponentStore)
 API.
     2. A pipeline function is created, with **@dsl_pipline** decorator, 
 where the component ops are executed and chained together to compose the workflow of the pipeline.
