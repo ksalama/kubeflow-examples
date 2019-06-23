@@ -61,9 +61,9 @@ and [byeworld](components/byeworld). Each displays a greeting message
 with respect to a given name and number of iteration.
 
 Each component directory includes the following files:
-* **<component-name>.py**: This includes the source code of the components. 
+* **[component-name].py**: This includes the source code of the components. 
 For example, [helloworld.py](components/helloworld/helloworld.py).
-* **test_<component-name>.py**: This includes the unit tests for the functions
+* **test_[component-name].py**: This includes the unit tests for the functions
 in the component source code. or example, [helloworld.py](components/helloworld/helloworld.py).
 * **Dockerfile**: This defines the container image to run the component code.
 For example, see the [Dockerfile](components/helloworld/Dockerfile) for the
