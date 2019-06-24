@@ -38,7 +38,7 @@ You can deploy a kubeflow instance on Google Cloud Platform (GCP)
 by following the [instructions](https://www.kubeflow.org/docs/gke/deploy/) 
 in Kubeflow documentations.
 
-## 3. Cloud build Setup
+## 3. Cloud Build Setup
 Cloud Build executes builds with the permissions granted to the Cloud Build 
 service account tied to the project. 
 You need to grant the service account the [Kubernetes Engine Developer](https://console.cloud.google.com/iam-admin/roles/details/roles<container.developer?folder=&organizationId=) 
