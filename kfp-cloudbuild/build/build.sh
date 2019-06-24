@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Execute the cloud build steps."""
 
 # Create the kfp-util docker container image
 docker build -t gcr.io/ml-cicd-template/kfp-util:latest .

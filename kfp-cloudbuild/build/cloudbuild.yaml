@@ -1,5 +1,3 @@
-"""Builds, deploys, and run the helloworld pipeline."""
-
 steps:
 
 # Clone repo to Cloud Build environment
@@ -36,7 +34,7 @@ steps:
 # Update component specs images
 - name: 'gcr.io/ml-cicd-template/kfp-util:latest'
   entrypoint: 'python3'
-  args: ['pipeline/helper.py','--operation=set-images',
+  args: ['pipeline/helper.py','update-specs',
          '--repo_url', 'gcr.io/${_PROJECT_ID}',
          '--image_tage', '{_TAG}']
   dir: '${_REPO_NAME}'
@@ -61,7 +59,7 @@ steps:
 - name: 'gcr.io/ml-cicd-template/kfp-util:latest'
   entrypoint: '/bin/sh'
   args: ['-c', '/builder/kubectl.bash;
-         python3 helper.py --operation=run-pipeline
+         python3 helper.py run-pipeline
          --experiment=\"$_EXPERIMENT_NAME\"
          --package_path=pipeline.tar.gz']
   dir: '${_REPO_NAME}/pipeline'

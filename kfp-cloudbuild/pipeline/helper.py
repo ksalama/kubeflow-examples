@@ -40,15 +40,6 @@ def update_component_spec(repo_url, image_tag):
       image_name, full_image_name))
 
 
-def update_settings(**params):
-  settings_file = os.path.join(os.path.dirname(__file__), SETTINGS_FILENAME)
-  settings = yaml.safe_load(pathlib.Path(settings_file).read_text())
-  for key, value in params.items():
-    section, setting = key.split('.')
-    settings[section][setting] = value
-  pathlib.Path(settings_file).write_text(yaml.dump(settings))
-
-
 def read_settings():
   """Read all the parameter values from the settings.yaml file."""
   settings_file = os.path.join(os.path.dirname(__file__), SETTINGS_FILENAME)
@@ -57,10 +48,6 @@ def read_settings():
   for sections in setting_sections:
       flat_settings.update(setting_sections[sections])
   return flat_settings
-
-
-def create_pipeline_version(pipeline_id, version):
-  pass
 
 
 def run_pipeline(kfp_package_path,
@@ -78,14 +65,8 @@ def run_pipeline(kfp_package_path,
 
 def main(operation, **args):
 
-  # Update Settings
-  if operation == 'update-settings':
-    print('Updating settings...')
-    update_settings(**args)
-    print('Settings updated.')
-
   # Update Component Specs
-  if operation == 'set-images':
+  if operation == 'update-specs':
     print('Setting images to the component spec...')
     if 'repo_url' not in args:
       raise ValueError('repo_url has to be supplied.')
@@ -116,7 +97,7 @@ def main(operation, **args):
 
   else:
     raise ValueError(
-      'Invalid operation name: {}. Valid operations: --set-images, --run'.format(operation))
+      'Invalid operation name: {}. Valid operations: update-specs | run-pipeline'.format(operation))
 
 
 if __name__ == '__main__':
