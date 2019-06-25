@@ -25,6 +25,7 @@ HOST_URL = 'https://{}.endpoints.{}.cloud.goog/pipeline'
 OUTPUT_PACKAGE_PATH = 'pipeline.tar.gz'
 NAMESPACE = 'kubeflow'
 EXPERIMENT_NAME = 'default-experiment'
+PIPELINE_NAME = 'helloworld-pipeline'
 
 
 def update_component_spec(repo_url, image_tag):
@@ -39,7 +40,6 @@ def update_component_spec(repo_url, image_tag):
     print('Component {} specs updated. Image:{}'.format(
       image_name, full_image_name))
 
-
 def read_settings():
   """Read all the parameter values from the settings.yaml file."""
   settings_file = os.path.join(os.path.dirname(__file__), SETTINGS_FILENAME)
@@ -50,17 +50,28 @@ def read_settings():
   return flat_settings
 
 
-def run_pipeline(kfp_package_path,
-                 experiment_name, run_id, namespace):
- """Run the givne kfp_package_path."""
- settings = read_settings()
+def deploy_pipeline(
+  kfp_package_path, version, experiment_name, namespace, run):
+ """Deploy and run the givne kfp_package_path."""
+
+ pipeline_name = PIPELINE_NAME+"-"+version
+
  client = kfp.Client(namespace=namespace)
- experiment = client.create_experiment(name=experiment_name)
- client.run_pipeline(
-   experiment.id,
-   job_name=run_id,
-   pipeline_package_path=kfp_package_path,
-   params=settings)
+
+ pipeline = client._upload_api.upload_pipeline(
+   uploadfile=kfp_package_path,
+   name=pipeline_name)
+ pipeline_id = pipeline.id
+
+ if run:
+   run_id = 'run-' + datetime.now().strftime('%Y%m%d-%H%M%S')
+   experiment = client.create_experiment(name=experiment_name)
+   settings=read_settings()
+   client.run_pipeline(
+     experiment.id,
+     job_name=run_id,
+     pipeline_id=pipeline_id,
+     params=settings)
 
 
 def main(operation, **args):
@@ -76,12 +87,16 @@ def main(operation, **args):
       image_tag = args['image_tage']
     update_component_spec(repo_url, image_tag)
 
-  # Run Pipeline
-  elif operation == 'run-pipeline':
+  # Deploy Pipeline
+  elif operation == 'deploy-pipeline':
     print('Running Kubeflow pipeline...')
     if 'package_path' not in args:
       raise ValueError('package_path has to be supplied.')
     package_path = args['package_path']
+
+    if 'version' not in args:
+      raise ValueError('version has to be supplied.')
+    version = args['version']
 
     namespace = NAMESPACE
     if 'namespace' in args:
@@ -91,13 +106,13 @@ def main(operation, **args):
     if 'experiment' in args:
       experiment_name = args['experiment']
 
-    run_id = 'run-'+datetime.now().strftime('%Y%m%d-%H%M%S')
+    run = 'run' in args
 
-    run_pipeline(package_path, experiment_name, run_id, namespace)
+    deploy_pipeline(package_path, version, experiment_name, namespace, run)
 
   else:
     raise ValueError(
-      'Invalid operation name: {}. Valid operations: update-specs | run-pipeline'.format(operation))
+      'Invalid operation name: {}. Valid operations: update-specs | deploy-pipeline'.format(operation))
 
 
 if __name__ == '__main__':

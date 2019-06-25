@@ -53,20 +53,22 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://${_GCS_LOCATION}/${_TAG}/']
   dir: '${_REPO_NAME}/pipeline'
-  id:   'Upload Pipeline'
+  id:   'Upload Pipeline to GCS'
 
-# Run pipeline in KFP
+# Deploy pipeline in KFP
 - name: 'gcr.io/ml-cicd-template/kfp-util:latest'
   entrypoint: '/bin/sh'
   args: ['-c', '/builder/kubectl.bash;
-         python3 helper.py run-pipeline
+         python3 helper.py deploy-pipeline
+         --package_path=pipeline.tar.gz
+         --version=\"$_TAG\"
          --experiment=\"$_EXPERIMENT_NAME\"
-         --package_path=pipeline.tar.gz']
+         --run']
   dir: '${_REPO_NAME}/pipeline'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
-  id:  'Run Pipeline'
+  id:  'Deploy & Run Pipeline'
   waitFor: ['Compile Pipeline']
 
 images:
