@@ -144,9 +144,10 @@ defined in [workflow.py](pipeline/workflow.py), to generate **pipeline.tar.gz** 
 7. **Upload to GCS**: This uploads the **pipeline.tar.gz** package to GCS.
     * This step uses [gcr.io/cloud-builders/gsutil](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gsutil) image.
 
-8. **Run Pipeline**: This executes the **run_pipeline** method
-in the [helper.py](pipeline/helper.py) module, given the **pipeline.tar.gz** package.
-The method creates and experiment in KFP, and run pipeline given the 
+8. **Deploy & Run Pipeline**: This executes the **deploy_pipeline** method
+in the [helper.py](pipeline/helper.py) module, given the **pipeline.tar.gz** package and pipeline **version**. 
+The method deploys the pipeline package to KFP. If an optional **--run** argument is passed,  
+the method also creates and experiment in KFP, and run pipeline given the 
 created experiment, compiled pipeline package, and loaded parameter values from the [settings.yaml](pipeline/settings.yaml) file.
     * This step uses the custom **kfp-util** image defines in this [Dockefile](build/Dockerfile).
     
