@@ -60,7 +60,7 @@ def deploy_pipeline(
 
  pipeline = client.upload_pipeline(
    pipeline_package_path=kfp_package_path,
-   pipeline_namename=pipeline_name)
+   pipeline_name=pipeline_name)
  pipeline_id = pipeline.id
 
  if run:
