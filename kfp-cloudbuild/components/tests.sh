@@ -13,5 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-python my_add/test_my_add.py
-python my_divide/test_my_divide.py
+python components/my_add/test_my_add.py
+python components/my_divide/test_my_divide.py

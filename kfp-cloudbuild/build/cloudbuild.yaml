@@ -12,23 +12,23 @@ steps:
 - name: 'python:3.6-slim-jessie'
   entrypoint: 'bash'
   args: ['tests.sh']
-  dir: '${_REPO_NAME}/components'
+  dir: '${_REPO_NAME}/kfp-cloudbuild'
   id: 'Run Unit Tests'
 
 # Create the image for the my_add component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
          '-t', 'gcr.io/$_PROJECT_ID/my_add:$_TAG', '.']
-  dir: '${_REPO_NAME}/components/my_add'
-  id: 'Build MyAdd Image'
+  dir: '${_REPO_NAME}/kfp-cloudbuild/components/my_add'
+  id: 'Build my_add Image'
   waitFor: ['Run Unit Tests']
 
 # Create the image for the my_divide component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
          '-t', 'gcr.io/$_PROJECT_ID/my_divide:$_TAG', '.']
-  dir: '${_REPO_NAME}/components/my_divide'
-  id: 'Build MyDivide Image'
+  dir: '${_REPO_NAME}/kfp-cloudbuild/components/my_divide'
+  id: 'Build my_divide Image'
   waitFor: ['Run Unit Tests']
 
 # Update component specs images
@@ -37,7 +37,7 @@ steps:
   args: ['pipeline/helper.py','update-specs',
          '--repo_url', 'gcr.io/${_PROJECT_ID}',
          '--image_tage', '{_TAG}']
-  dir: '${_REPO_NAME}'
+  dir: '${_REPO_NAME}/kfp-cloudbuild'
   id:  'Update Component Spec Images'
 
 # Compile pipeline
@@ -46,13 +46,13 @@ steps:
   args: ['--py', 'pipeline/workflow.py',
          '--output', 'pipeline/pipeline.tar.gz',
          '--disable-type-check']
-  dir: '${_REPO_NAME}'
+  dir: '${_REPO_NAME}/kfp-cloudbuild'
   id:  'Compile Pipeline'
 
 # Upload compiled pipeline to GCS
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://${_GCS_LOCATION}/${_TAG}/']
-  dir: '${_REPO_NAME}/pipeline'
+  dir: '${_REPO_NAME}/kfp-cloudbuild/pipeline'
   id:   'Upload Pipeline to GCS'
 
 # Deploy pipeline in KFP
@@ -64,7 +64,7 @@ steps:
          --version=\"$_TAG\"
          --experiment=\"$_EXPERIMENT_NAME\"
          --run']
-  dir: '${_REPO_NAME}/pipeline'
+  dir: '${_REPO_NAME}/kfp-cloudbuild/pipeline'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
@@ -72,5 +72,5 @@ steps:
   waitFor: ['Compile Pipeline']
 
 images:
-- 'gcr.io/${_PROJECT_ID}/helloworld:${_TAG}'
-- 'gcr.io/${_PROJECT_ID}/byeworld:${_TAG}'
+- 'gcr.io/${_PROJECT_ID}/my_add:${_TAG}'
+- 'gcr.io/${_PROJECT_ID}/my_divide:${_TAG}'
