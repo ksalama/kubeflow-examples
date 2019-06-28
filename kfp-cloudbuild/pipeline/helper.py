@@ -58,9 +58,9 @@ def deploy_pipeline(
 
  client = kfp.Client(namespace=namespace)
 
- pipeline = client._upload_api.upload_pipeline(
-   uploadfile=kfp_package_path,
-   name=pipeline_name)
+ pipeline = client.upload_pipeline(
+   pipeline_package=kfp_package_path,
+   pipeline_namename=pipeline_name)
  pipeline_id = pipeline.id
 
  if run:

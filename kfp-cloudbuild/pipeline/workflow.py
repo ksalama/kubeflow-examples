@@ -37,14 +37,17 @@ def pipeline(
 ):
 
   add_step = add_op(x_value=x_value, y_value=y_value)
+  add_step.set_display_name('Add x and y')
   add_result = add_step.outputs
   sum_value = add_result['sum']
   is_even = sum_value != 0
   with kfp.dsl.Condition(is_even):
     divide_step = divide_op(x_value=sum_value, y_value=z_value)
+    divide_step.set_display_name('Divide sum by z')
     add_step2 = add_op(
       x_value=divide_step.outputs['quotient'],
       y_value=divide_step.outputs['remainder'])
+    add_step2.set_display_name('Add quotient and remainder')
 
 
 

@@ -139,7 +139,7 @@ RUN set -ex; \
 ### Install the required Python packages ######################################
 
 RUN pip3 install fire pyyaml pathlib
-RUN pip3 install https://storage.googleapis.com/ml-pipeline/release/0.1.21/kfp.tar.gz
+RUN pip3 install https://storage.googleapis.com/ml-pipeline/release/0.1.23/kfp.tar.gz
 
 ###############################################################################
 
