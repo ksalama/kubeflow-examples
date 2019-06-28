@@ -18,7 +18,7 @@ import kfp.dsl as dsl
 
 # Initialize component store
 component_store = kfp.components.ComponentStore(
-  local_search_paths='../components')
+  local_search_paths=['../components'])
 
 # Create component factories
 add_op = component_store.load_component('my_add')
