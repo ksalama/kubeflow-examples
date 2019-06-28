@@ -7,16 +7,18 @@ implementation:
     - inputValue: x_value
     - --y_value
     - inputValue: y_value
+    - --result-path
+    - outputPath: sum
     image: gcr.io/
 inputs:
 - default: 0
-  description: Hello greeting message to print
+  description: Input x value
   name: x_value
   type: Integer
 - default: 0
-  description: Number of times to print the greeting message
-  name: y_value
+  description: Input y value
+  name: y-value
   type: Integer
 outputs:
-- name: result
+- name: sum
 name: my_add

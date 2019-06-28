@@ -21,8 +21,8 @@ component_store = kfp.components.ComponentStore(
   local_search_paths='../components')
 
 # Create component factories
-add_op = component_store.load_component('components/my_add')
-divide_op = component_store.load_component('components/my_divide')
+add_op = component_store.load_component('my_add')
+divide_op = component_store.load_component('my_divide')
 
 
 # Define pipeline
@@ -33,16 +33,16 @@ divide_op = component_store.load_component('components/my_divide')
 def pipeline(
   x_value: int=1,
   y_value: int=1,
-  z_value: int=1
+  z_value: int=1,
 ):
 
   add_step = add_op(x_value=x_value, y_value=y_value)
   add_result = add_step.outputs
   print(add_result.keys())
-  z_value = add_result['result']
-  is_even = z_value % 2 == 0
-  with kfp.dsl.Condition(is_even is True):
-    divide_step = divide_op(x_value=add_result, y_value=z_value)
+  sum_value = add_result['sum']
+  is_even = sum_value == 0
+  with kfp.dsl.Condition(is_even):
+    divide_step = divide_op(x_value=sum_value, y_value=z_value)
     add_step2 = add_op(
       x_value=divide_step.outputs['quotient'],
       y_value=divide_step.outputs['remainder'])

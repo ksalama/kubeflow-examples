@@ -14,6 +14,7 @@
 """My_add component source code."""
 
 import argparse
+from pathlib import Path
 
 
 def add(x: int, y: int) -> int:
@@ -23,15 +24,21 @@ def add(x: int, y: int) -> int:
 
 
 def main(args):
-  x = float(args.x_value)
-  y = float(args.y_value)
+  x = int(args.x_value)
+  y = int(args.y_value)
   result = add(x, y)
   print("Result: {}".format(result))
+
+  # Write output to file
+  Path(args.result_path).parent.mkdir(parents=True, exist_ok=True)
+  Path(args.result_path).write_text(str(result))
+
 
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("--x_value", type=int)
   parser.add_argument("--y_value", type=int)
+  parser.add_argument("--result-path", type=str)
   args = parser.parse_args()
   main(args)
