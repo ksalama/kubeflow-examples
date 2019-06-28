@@ -37,8 +37,11 @@ def main(args):
   print("Result: {}".format(result))
 
   # Write output to file
-  Path(args.result_path).parent.mkdir(parents=True, exist_ok=True)
-  Path(args.result_path).write_text(str(result))
+  Path(args.quotient_path).parent.mkdir(parents=True, exist_ok=True)
+  Path(args.quotient_path).write_text(str(result.quotient))
+
+  Path(args.remainder_path).parent.mkdir(parents=True, exist_ok=True)
+  Path(args.remainder_path).write_text(str(result.remainder))
 
 
 if __name__ == "__main__":
