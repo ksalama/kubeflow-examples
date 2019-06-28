@@ -11,7 +11,7 @@ steps:
 # Run unit tests
 - name: 'python:3.6-slim-jessie'
   entrypoint: 'bash'
-  args: ['tests.sh']
+  args: ['components/tests.sh']
   dir: '${_REPO_NAME}/kfp-cloudbuild'
   id: 'Run Unit Tests'
 
