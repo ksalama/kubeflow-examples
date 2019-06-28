@@ -20,8 +20,8 @@ from collections import namedtuple
 
 def divide(x: int, y: int) -> NamedTuple('MyDivmodOutput', [('quotient', float), ('remainder', float)]):
   """Returns the quotient and the remainder  of dividing x on y."""
-  quotient = x / y
-  remainder = x % y
+  quotient = int(x) / int(y)
+  remainder = int(x) % int(y)
 
   myDivmodOutput = namedtuple('MyDivmodOutput', ['quotient', 'remainder'])
   result = myDivmodOutput(quotient=quotient, remainder=remainder)
