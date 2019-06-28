@@ -51,5 +51,4 @@ if __name__ == "__main__":
   parser.add_argument("--quotient-path", type=str)
   parser.add_argument("--remainder-path", type=str)
   args = parser.parse_args()
-  print(args)
   main(args)
