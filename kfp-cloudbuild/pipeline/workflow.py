@@ -24,7 +24,6 @@ component_store = kfp.components.ComponentStore(
 add_op = component_store.load_component('my_add')
 divide_op = component_store.load_component('my_divide')
 
-
 # Define pipeline
 @dsl.pipeline(
   name='A Simple CI pipeline',
