@@ -17,6 +17,6 @@ inputs:
   name: y_value
   type: Integer
 outputs:
-- {name: quotient},
-- {name: remainder}
+- name: quotient
+- name: remainder
 name: my_divide

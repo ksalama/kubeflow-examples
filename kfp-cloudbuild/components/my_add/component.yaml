@@ -17,5 +17,5 @@ inputs:
   name: y_value
   type: Integer
 outputs:
-- {name: result},
+- name: result
 name: my_add
