@@ -20,7 +20,7 @@ import my_add
 class TestMyAdd(unittest.TestCase):
 
     def test_add(self):
-        self.assertEqual(my_add.add(5.1, 5.3), 10.4)
+        self.assertEqual(my_add.add(5, 5), 10)
 
 
 if __name__ == '__main__':

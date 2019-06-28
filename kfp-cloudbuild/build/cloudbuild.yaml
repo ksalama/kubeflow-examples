@@ -20,7 +20,7 @@ steps:
   args: ['build',
          '-t', 'gcr.io/$_PROJECT_ID/my_add:$_TAG', '.']
   dir: '${_REPO_NAME}/components/my_add'
-  id: 'Build HelloWorld Image'
+  id: 'Build MyAdd Image'
   waitFor: ['Run Unit Tests']
 
 # Create the image for the my_divide component
@@ -28,7 +28,7 @@ steps:
   args: ['build',
          '-t', 'gcr.io/$_PROJECT_ID/my_divide:$_TAG', '.']
   dir: '${_REPO_NAME}/components/my_divide'
-  id: 'Build GoodbyeWorld Image'
+  id: 'Build MyDivide Image'
   waitFor: ['Run Unit Tests']
 
 # Update component specs images
