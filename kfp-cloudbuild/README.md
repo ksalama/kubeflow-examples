@@ -169,4 +169,4 @@ after setting the substitution values.
 
 The folowing screenshot shows the output of a build process:
 
-![Cloud Build Execution](resources/cloudbuild-exe.png)
+![Cloud Build Execution](resources/cloudbuild-exec.png)
