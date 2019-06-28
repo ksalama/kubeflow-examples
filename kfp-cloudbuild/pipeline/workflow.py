@@ -38,9 +38,8 @@ def pipeline(
 
   add_step = add_op(x_value=x_value, y_value=y_value)
   add_result = add_step.outputs
-  print(add_result.keys())
   sum_value = add_result['sum']
-  is_even = sum_value == 0
+  is_even = sum_value != 0
   with kfp.dsl.Condition(is_even):
     divide_step = divide_op(x_value=sum_value, y_value=z_value)
     add_step2 = add_op(
