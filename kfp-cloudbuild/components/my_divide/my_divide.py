@@ -14,6 +14,7 @@
 """My_divide component source code."""
 
 import argparse
+from pathlib import Path
 from typing import NamedTuple
 from collections import namedtuple
 
@@ -34,6 +35,10 @@ def main(args):
   y = int(args.y_value)
   result = divide(x, y)
   print("Result: {}".format(result))
+
+  # Write output to file
+  Path(args.result_path).parent.mkdir(parents=True, exist_ok=True)
+  Path(args.result_path).write_text(str(result))
 
 
 if __name__ == "__main__":
