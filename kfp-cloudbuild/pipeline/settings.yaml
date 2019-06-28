@@ -1,4 +1,4 @@
-parameters:
+arguments:
   x_value: 10
   y_value: 10
   z_value: 3
