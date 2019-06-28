@@ -1,9 +1,10 @@
-# A "Hello World!" CI/CD Example with Kubeflow Pipelines and Cloud Build
+# A Simple CI/CD Example with Kubeflow Pipelines and Cloud Build
 
-This repository shows a simple "Hello world" example for Kubeflow Pipelines and
+This repository shows a simple example for Kubeflow Pipelines (KFP) and
 Cloud Build. The aim from this example is to:
-1. Show how to **organise the repository structure** for implementing your 
-components source code, unit tests, Dockerfiles, specs, and pipeline workflow and settings.
+1. Create KFP components with inputs and outputs.
+2. Show how to **organise the repository structure** for implementing your 
+components (source code, unit tests, Dockerfiles, specs, and pipeline workflow and settings).
 2. How to **perform build and deploy** for your pipeline using Cloud Build. 
 
 ## Requirements
@@ -34,7 +35,7 @@ gcloud
 ```
 
 ### 2. Kubeflow Setup
-You can deploy a kubeflow instance on Google Cloud Platform (GCP) 
+You can deploy a Kubeflow instance on Google Cloud Platform (GCP) 
 by following the [instructions](https://www.kubeflow.org/docs/gke/deploy/) 
 in Kubeflow documentations.
 
@@ -56,22 +57,21 @@ This is shown in the following screenshot:
 ### 1. [components](components)
 This directory includes the artifacts required for each component in the pipeline.
 Each component has its own directory: **<component-name>**. In this example, 
-there are two components: [helloworld](components/helloworld), 
-and [byeworld](components/byeworld). Each displays a greeting message 
-with respect to a given name and number of iteration.
+there are two components: [my_add](components/my_add), 
+and [my_divide](components/my_divide). 
 
 Each component directory includes the following files:
 * **[component-name].py**: This includes the source code of the components. 
-For example, [helloworld.py](components/helloworld/helloworld.py).
+For example, [my_add.py](components/my_add/my_add.py).
 * **test_[component-name].py**: This includes the unit tests for the functions
-in the component source code. or example, [helloworld.py](components/helloworld/helloworld.py).
+in the component source code. For example, [my_add.py](components/my_add/may_add.py).
 * **Dockerfile**: This defines the container image to run the component code.
-For example, see the [Dockerfile](components/helloworld/Dockerfile) for the
-helloworld component.
+For example, see the [Dockerfile](components/my_add/Dockerfile) for the
+my_add component.
 * **component.yaml**: This defines the [component specs](https://www.kubeflow.org/docs/pipelines/reference/component-spec/) 
 for the pipeline. The specs includes component **inputs**, **outputs**, and **image**.
-For example, see the [component.yaml](components/helloworld/component.yaml) for the
-helloworld component.
+For example, see the [component.yaml](components/my_add/component.yaml) for the
+my_add component.
 
 In addition, the [test.sh](components/tests.sh) includes the scripts to run 
 unit test modules in all the components.
@@ -124,8 +124,8 @@ local environment.
 script that run the unit test for the various components.
     * This step uses the custom **kfp-util** image defines in this [Dockefile](build/Dockerfile).
 3. **Build Component Images**: In this example, we build Docker container images 
-    for two components: [helloworld](components/helloworld/Dockerfile) 
-    and [byeworld](components/byeworld/Dockerfile), 
+    for two components: [my_add](components/my_add/Dockerfile) 
+    and [my_divide](components/my_divide/Dockerfile), 
     and tag with the **${_TAG}** value passed in the substitutions. 
         * This step uses [gcr.io/cloud-builders/docker](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/docker) image.
 4. **Push Images to Registry**: This is performed automatically when you define 
