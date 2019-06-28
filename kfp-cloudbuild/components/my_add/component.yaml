@@ -9,7 +9,7 @@ implementation:
     - inputValue: y-value
     - --result-path
     - outputPath: sum
-    image: gcr.io/
+    image: gcr.io
 inputs:
 - default: 0
   description: Input x value
