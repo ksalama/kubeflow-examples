@@ -1,6 +1,7 @@
 description: Adds to float values
 implementation:
   container:
+    command: ["python", "/my_add.py"]
     args:
     - --x_value
     - inputValue: x_value
