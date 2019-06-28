@@ -3,17 +3,17 @@ implementation:
   container:
     command: ["python", "/my_add.py"]
     args:
-    - --x_value
-    - inputValue: x_value
-    - --y_value
-    - inputValue: y_value
+    - --x-value
+    - inputValue: x-value
+    - --y-value
+    - inputValue: y-value
     - --result-path
     - outputPath: sum
     image: gcr.io/
 inputs:
 - default: 0
   description: Input x value
-  name: x_value
+  name: x-value
   type: Integer
 - default: 0
   description: Input y value

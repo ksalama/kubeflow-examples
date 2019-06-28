@@ -37,8 +37,8 @@ def main(args):
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
-  parser.add_argument("--x_value", type=int)
-  parser.add_argument("--y_value", type=int)
+  parser.add_argument("--x-value", type=int)
+  parser.add_argument("--y-value", type=int)
   parser.add_argument("--result-path", type=str)
   args = parser.parse_args()
   main(args)

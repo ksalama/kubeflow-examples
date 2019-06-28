@@ -3,10 +3,10 @@ implementation:
   container:
     command: ["python", "/my_divide.py"]
     args:
-    - --x_value
-    - inputValue: x_value
-    - --y_value
-    - inputValue: y_value
+    - --x-value
+    - inputValue: x-value
+    - --y-value
+    - inputValue: y-value
     - --quotient-path
     - outputPath: quotient
     - --remainder-path
