@@ -18,33 +18,32 @@ import kfp.dsl as dsl
 
 # Initialize component store
 component_store = kfp.components.ComponentStore(
-  local_search_paths='../components',
-  url_search_prefixes='https://raw.githubusercontent.com/kubeflow/pipelines/3b938d664de35db9401c6d198439394a9fca95fa/components/gcp')
+  local_search_paths='../components')
 
 # Create component factories
-helloworld_op = component_store.load_component('components/helloworld')
-byeworld_op = component_store.load_component('components/byeworld')
+add_op = component_store.load_component('components/my_add')
+divide_op = component_store.load_component('components/my_divide')
 
 
 # Define pipeline
 @dsl.pipeline(
-  name='Hello World CI pipeline',
+  name='A Simple CI pipeline',
   description='Basic sample to show how to do CI with KFP using CloudBuild'
 )
 def pipeline(
-  name: str='world',
-  iterations: int=1,
-  skip_bye: bool=False
+  x_value: int=1,
+  y_value: int=1,
+  z_value: int=1
 ):
 
-  helloworld_step = helloworld_op(name=name, iterations=iterations)
-  with kfp.dsl.Condition(skip_bye == False):
-    byeworld_step = byeworld_op(name=name, iterations=iterations)
-
-  steps = [
-    helloworld_step,
-    byeworld_step
-  ]
+  add_step = add_op(x_value=x_value, y_value=y_value)
+  add_result = add_step.outputs['result']
+  is_even = add_result % 2 == 0
+  with kfp.dsl.Condition(is_even == True):
+    divide_step = divide_op(x_value=add_result, y_value=z_value)
+    add_step2 = add_op(
+      x_value=divide_step.outputs['quotient'],
+      y_value=divide_step.outputs['remainder'])
 
 
 

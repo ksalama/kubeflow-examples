@@ -11,16 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Helloworld component unit tests."""
+"""My_divide component unit tests."""
 
 import unittest
-import helloworld
+import my_divide
 
 
-class TestSum(unittest.TestCase):
+class TestMyDivide(unittest.TestCase):
 
-    def test_greetings(self):
-        self.assertEqual(helloworld.greetings('Google'), "Hello Google!!")
+    def test_divide(self):
+        result = my_divide.divide(10, 3)
+        self.assertEqual(result.quotient,3)
+        self.assertEqual(result.remainder, 1)
 
 
 if __name__ == '__main__':

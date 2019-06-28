@@ -11,24 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Helloworld component source code."""
+"""My_add component unit tests."""
 
-import argparse
-
-
-def greetings(name="world"):
-  """Returns a Hello greeting message with the given name."""
-  return "Hello {}!!".format(name)
+import unittest
+import my_add
 
 
-def main(args):
-  for i in range(args.iterations):
-    print(i+1,':', greetings(args.name))
+class TestMyAdd(unittest.TestCase):
+
+    def test_add(self):
+        self.assertEqual(my_add.add(5.1, 5.3), 10.4)
 
 
-if __name__ == "__main__":
-  parser = argparse.ArgumentParser()
-  parser.add_argument("--name", type=str)
-  parser.add_argument("--iterations", type=int)
-  args = parser.parse_args()
-  main(args)
+if __name__ == '__main__':
+    unittest.main()

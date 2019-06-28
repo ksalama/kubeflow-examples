@@ -11,24 +11,34 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Byeworld component source code."""
+"""My_divide component source code."""
 
 import argparse
+from typing import NamedTuple
+from collections import namedtuple
 
 
-def greetings(name="world"):
-  """Returns a Goodbye greeting message with the given name."""
-  return "Goodbye {}!!".format(name)
+def divide(x: int, y: int) -> NamedTuple('MyDivmodOutput', [('quotient', float), ('remainder', float)]):
+  """Returns the quotient and the remainder  of dividing x on y."""
+  quotient = x / y
+  remainder = x % y
+
+  myDivmodOutput = namedtuple('MyDivmodOutput', ['quotient', 'remainder'])
+  result = myDivmodOutput(quotient=quotient, remainder=remainder)
+
+  return result
 
 
 def main(args):
-  for i in range(args.iterations):
-    print(i+1,':', greetings(args.name))
+  x = int(args.x_value)
+  y = int(args.y_value)
+  result = divide(x, y)
+  print("Result: {}".format(result))
 
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
-  parser.add_argument("--name", type=str)
-  parser.add_argument("--iterations", type=int)
+  parser.add_argument("--x_value", type=float)
+  parser.add_argument("--y_value", type=float)
   args = parser.parse_args()
   main(args)

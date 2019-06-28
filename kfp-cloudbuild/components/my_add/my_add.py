@@ -11,17 +11,27 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Byeworld component unit tests."""
+"""My_add component source code."""
 
-import unittest
-import byeworld
-
-
-class TestSum(unittest.TestCase):
-
-    def test_greetings(self):
-        self.assertEqual(byeworld.greetings('Google'), "Goodbye Google!!")
+import argparse
 
 
-if __name__ == '__main__':
-    unittest.main()
+def add(x: int, y: int) -> int:
+  """Returns the sum of x and y."""
+  result = x +  y
+  return result
+
+
+def main(args):
+  x = float(args.x_value)
+  y = float(args.y_value)
+  result = add(x, y)
+  print("Result: {}".format(result))
+
+
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--x_value", type=int)
+  parser.add_argument("--y_value", type=int)
+  args = parser.parse_args()
+  main(args)

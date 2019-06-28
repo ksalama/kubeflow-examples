@@ -15,19 +15,19 @@ steps:
   dir: '${_REPO_NAME}/components'
   id: 'Run Unit Tests'
 
-# Create the image for the helloworld component
+# Create the image for the my_add component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
-         '-t', 'gcr.io/$_PROJECT_ID/helloworld:$_TAG', '.']
-  dir: '${_REPO_NAME}/components/helloworld'
+         '-t', 'gcr.io/$_PROJECT_ID/my_add:$_TAG', '.']
+  dir: '${_REPO_NAME}/components/my_add'
   id: 'Build HelloWorld Image'
   waitFor: ['Run Unit Tests']
 
-# Create the image for the byeworld component
+# Create the image for the my_divide component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
-         '-t', 'gcr.io/$_PROJECT_ID/byeworld:$_TAG', '.']
-  dir: '${_REPO_NAME}/components/byeworld'
+         '-t', 'gcr.io/$_PROJECT_ID/my_divide:$_TAG', '.']
+  dir: '${_REPO_NAME}/components/my_divide'
   id: 'Build GoodbyeWorld Image'
   waitFor: ['Run Unit Tests']
 

@@ -1,4 +1,4 @@
-helloworld:
-  iterations: 3
-  name: Google Cloud Platform
-  skip_bye: False
+parameters:
+  x_value: 10
+  y_value: 10
+  z_value: 3

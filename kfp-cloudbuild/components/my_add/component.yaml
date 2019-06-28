@@ -1,0 +1,21 @@
+description: Adds to float values
+implementation:
+  container:
+    args:
+    - --x_value
+    - inputValue: x_value
+    - --y_value
+    - inputValue: y_value
+    image: gcr.io/
+inputs:
+- default: 0
+  description: Hello greeting message to print
+  name: x_value
+  type: Integer
+- default: 0
+  description: Number of times to print the greeting message
+  name: y_value
+  type: Integer
+outputs:
+- {name: result},
+name: my_add
