@@ -15,8 +15,10 @@ class TaskManager:
     }
 
     # Write output to file
+    task_json = json.dumps(tasks)
+    print(task_json)
     Path(tasks_path).parent.mkdir(parents=True, exist_ok=True)
-    Path(tasks_path).write_text(json.dumps(tasks))
+    Path(tasks_path).write_text(task_json)
 
   def acknowledge_task(self, task_id):
     print("Task {} succeeded.".format(task_id))
@@ -28,8 +30,9 @@ def main(operation, **args):
 
   # Dispatch tasks
   if operation == 'dispatch':
-    print('Dispatching tasks')
+    print('Dispatching tasks...')
     manager.dispatch_tasks(args.task_path)
+    print('Dispatching complete.')
 
   # Acknowledge task completion
   elif operation == 'acknowledge':
@@ -39,6 +42,7 @@ def main(operation, **args):
     print('Acknowledge task...')
     task_id = args['task_id']
     manager.acknowledge_task(task_id)
+    print('Acknowledged.')
 
 
   else:
