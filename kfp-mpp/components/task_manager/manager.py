@@ -31,7 +31,7 @@ def main(operation, **args):
   # Dispatch tasks
   if operation == 'dispatch':
     print('Dispatching tasks...')
-    manager.dispatch_tasks(args.task_path)
+    manager.dispatch_tasks(args.tasks_path)
     print('Dispatching complete.')
 
   # Acknowledge task completion
@@ -44,7 +44,7 @@ def main(operation, **args):
     manager.acknowledge_task(task_id)
     print('Acknowledged.')
 
-
+  # Invalid operation supplied
   else:
     raise ValueError(
       'Invalid operation name: {}. Valid operations: dispatch | ack'.format(operation))
