@@ -5,7 +5,7 @@ from pathlib import Path
 
 class TaskManager:
 
-  def dispatch_tasks(self):
+  def dispatch_tasks(self, tasks_path):
     tasks = {
       task_id: {
         'task-param1': 'task-'+str(task_id)+'-v1',
@@ -15,8 +15,8 @@ class TaskManager:
     }
 
     # Write output to file
-    Path('tasks').parent.mkdir(parents=True, exist_ok=True)
-    Path('tasks').write_text(json.dumps(tasks))
+    Path(tasks_path).parent.mkdir(parents=True, exist_ok=True)
+    Path(tasks_path).write_text(json.dumps(tasks))
 
   def acknowledge_task(self, task_id):
     print("Task {} succeeded.".format(task_id))
@@ -29,7 +29,7 @@ def main(operation, **args):
   # Dispatch tasks
   if operation == 'dispatch':
     print('Dispatching tasks')
-    manager.dispatch_tasks()
+    manager.dispatch_tasks(args.task_path)
 
   # Acknowledge task completion
   elif operation == 'acknowledge':
