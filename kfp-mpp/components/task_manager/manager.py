@@ -24,20 +24,20 @@ class TaskManager:
     print("Task {} succeeded.".format(task_id))
 
 
-def main(**args):
+def main(operation, **args):
 
   manager = TaskManager()
 
   print(args)
 
   # Dispatch tasks
-  if args.operation == 'dispatch':
+  if operation == 'dispatch':
     print('Dispatching tasks...')
-    manager.dispatch_tasks(args.tasks_path)
+    manager.dispatch_tasks(args['tasks_path'])
     print('Dispatching complete.')
 
   # Acknowledge task completion
-  elif args.operation == 'acknowledge':
+  elif args['operation'] == 'acknowledge':
     if 'task_id' not in args:
       raise ValueError('task_id has to be supplied.')
 
