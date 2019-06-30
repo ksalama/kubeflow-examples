@@ -2,7 +2,7 @@ name: task_manager
 description: Dispatch and acknowledge tasks
 implementation:
   container:
-    command: ["python", "/task_manager.py"]
+    command: ["python", "/manager.py"]
     args:
     - --operation
     - inputValue: operation
