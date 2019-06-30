@@ -1,0 +1,22 @@
+name: task_manager
+description: Dispatch and acknowledge tasks
+implementation:
+  container:
+    command: ["python", "/task_manager.py"]
+    args:
+    - --operation
+    - inputValue: operation
+    - --task-id
+    - inputValue: task-id
+    - --tasks-path
+    - outputPath: tasks
+    image: gcr.io
+inputs:
+- name: operation
+  type: String
+  description: Task Manager Operation dispatch or ack
+- name: task-id
+  type: String
+  description: Task Identifier
+outputs:
+- name: tasks

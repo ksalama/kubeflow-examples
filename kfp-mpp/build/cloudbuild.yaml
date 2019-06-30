@@ -1,0 +1,76 @@
+steps:
+
+# Clone repo to Cloud Build environment
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone',
+         '${_REPO_URL}', '.',
+         '--depth', '1',
+         '--verbose']
+  id: 'Clone Repo'
+
+# Run unit tests
+#- name: 'python:3.6-slim-jessie'
+#  entrypoint: 'bash'
+#  args: ['components/tests.sh']
+#  dir: '${_REPO_NAME}/kfp-mpp-example'
+#  id: 'Run Unit Tests'
+
+# Create the image for the my_add component
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build',
+         '-t', 'gcr.io/$_PROJECT_ID/task:$_TAG', '.']
+  dir: 'kfp-mpp/components/task'
+  id: 'Build task Image'
+#  waitFor: ['Run Unit Tests']
+
+# Create the image for the my_divide component
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build',
+         '-t', 'gcr.io/$_PROJECT_ID/task_manager:$_TAG', '.']
+  dir: 'kfp-mpp/components/task_manager'
+  id: 'Build my_divide Image'
+#  waitFor: ['Run Unit Tests']
+
+# Update component specs images
+- name: 'gcr.io/ml-cicd-template/kfp-util:latest'
+  entrypoint: 'python3'
+  args: ['pipeline/helper.py','update-specs',
+         '--repo_url', 'gcr.io/${_PROJECT_ID}',
+         '--image_tage', '{_TAG}']
+  dir: '$kfp-mpp'
+  id:  'Update Component Spec Images'
+
+# Compile pipeline
+- name: 'gcr.io/ml-cicd-template/kfp-util:latest'
+  entrypoint: 'dsl-compile'
+  args: ['--py', 'pipeline/workflow.py',
+         '--output', 'pipeline/pipeline.tar.gz',
+         '--disable-type-check']
+  dir: '$kfp-mpp'
+  id:  'Compile Pipeline'
+
+# Upload compiled pipeline to GCS
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://${_GCS_LOCATION}/${_TAG}/']
+  dir: '$kfp-mpp/pipeline'
+  id:   'Upload Pipeline to GCS'
+
+# Deploy pipeline in KFP
+- name: 'gcr.io/ml-cicd-template/kfp-util:latest'
+  entrypoint: '/bin/sh'
+  args: ['-c', '/builder/kubectl.bash;
+         python3 helper.py deploy-pipeline
+         --package_path=pipeline.tar.gz
+         --version=\"$_TAG\"
+         --experiment=\"$_EXPERIMENT_NAME\"
+         --run']
+  dir: 'kfp-mpp/pipeline'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+  id:  'Deploy & Run Pipeline'
+  waitFor: ['Compile Pipeline']
+
+images:
+- 'gcr.io/${_PROJECT_ID}/task:${_TAG}'
+- 'gcr.io/${_PROJECT_ID}/task_manager:${_TAG}'

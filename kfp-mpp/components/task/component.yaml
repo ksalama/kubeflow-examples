@@ -1,0 +1,21 @@
+name: task
+description: Executes a task
+implementation:
+  container:
+    command: ["python", "/task.py"]
+    args:
+    - --task-id
+    - inputValue: task-id
+    - outputPath: task_id
+    - --task-args
+    - inputValue: task-args
+    image: gcr.io
+inputs:
+- name: task-id
+  type: String
+  description: Task Identifier
+- name: task-args
+  type: String
+  description: Task arguments as dictionary
+outputs:
+- name: task_id
