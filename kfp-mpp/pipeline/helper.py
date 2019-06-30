@@ -45,8 +45,9 @@ def read_settings():
   settings_file = os.path.join(os.path.dirname(__file__), SETTINGS_FILENAME)
   flat_settings = dict()
   setting_sections = yaml.safe_load(pathlib.Path(settings_file).read_text())
-  for sections in setting_sections:
-      flat_settings.update(setting_sections[sections])
+  if setting_sections:
+    for sections in setting_sections:
+        flat_settings.update(setting_sections[sections])
   return flat_settings
 
 
