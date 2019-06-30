@@ -49,7 +49,7 @@ def main(operation, **args):
   # Invalid operation supplied
   else:
     raise ValueError(
-      'Invalid operation name: {}. Valid operations: dispatch | ack'.format(args.operation))
+      'Invalid operation name: {}. Valid operations: dispatch | ack'.format(operation))
 
 
 if __name__ == '__main__':
