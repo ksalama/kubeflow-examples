@@ -25,7 +25,7 @@ HOST_URL = 'https://{}.endpoints.{}.cloud.goog/pipeline'
 OUTPUT_PACKAGE_PATH = 'pipeline.tar.gz'
 NAMESPACE = 'kubeflow'
 EXPERIMENT_NAME = 'default-experiment'
-PIPELINE_NAME = 'helloworld-pipeline'
+PIPELINE_NAME = 'mpp-pipeline'
 
 
 def update_component_spec(repo_url, image_tag):

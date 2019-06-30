@@ -12,10 +12,10 @@ steps:
 #- name: 'python:3.6-slim-jessie'
 #  entrypoint: 'bash'
 #  args: ['components/tests.sh']
-#  dir: '${_REPO_NAME}/kfp-mpp-example'
+#  dir: 'kfp-mpp'
 #  id: 'Run Unit Tests'
 
-# Create the image for the my_add component
+# Create the image for the task component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
          '-t', 'gcr.io/$_PROJECT_ID/task:$_TAG', '.']
@@ -23,12 +23,12 @@ steps:
   id: 'Build task Image'
 #  waitFor: ['Run Unit Tests']
 
-# Create the image for the my_divide component
+# Create the image for the task manager component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
          '-t', 'gcr.io/$_PROJECT_ID/task_manager:$_TAG', '.']
   dir: 'kfp-mpp/components/task_manager'
-  id: 'Build my_divide Image'
+  id: 'Build Task Manager Image'
 #  waitFor: ['Run Unit Tests']
 
 # Update component specs images
@@ -37,7 +37,7 @@ steps:
   args: ['pipeline/helper.py','update-specs',
          '--repo_url', 'gcr.io/${_PROJECT_ID}',
          '--image_tage', '{_TAG}']
-  dir: '$kfp-mpp'
+  dir: 'kfp-mpp'
   id:  'Update Component Spec Images'
 
 # Compile pipeline
@@ -46,13 +46,13 @@ steps:
   args: ['--py', 'pipeline/workflow.py',
          '--output', 'pipeline/pipeline.tar.gz',
          '--disable-type-check']
-  dir: '$kfp-mpp'
+  dir: 'kfp-mpp'
   id:  'Compile Pipeline'
 
 # Upload compiled pipeline to GCS
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://${_GCS_LOCATION}/${_TAG}/']
-  dir: '$kfp-mpp/pipeline'
+  dir: 'kfp-mpp/pipeline'
   id:   'Upload Pipeline to GCS'
 
 # Deploy pipeline in KFP
