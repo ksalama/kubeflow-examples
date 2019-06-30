@@ -28,6 +28,8 @@ def main(**args):
 
   manager = TaskManager()
 
+  print(args)
+
   # Dispatch tasks
   if args.operation == 'dispatch':
     print('Dispatching tasks...')
