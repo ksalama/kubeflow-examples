@@ -19,7 +19,7 @@ gcloud docker -- push gcr.io/ml-cicd-template/kfp-util:latest
 
 # Set substitutions
 SUBSTITUTIONS=\
-_REPO_URL='https://source.developers.google.com/p/ml-cicd-template/r/kfp-helloworld',\
+_REPO_URL='https://github.com/ksalama/kubeflow-examples.git',\
 _REPO_NAME='kfp-helloworld',\
 _PROJECT_ID='ml-cicd-template',\
 _COMPUTE_ZONE='europe-west1-b',\
