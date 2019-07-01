@@ -16,7 +16,6 @@ class TaskManager:
 
     # Write output to file
     task_json = json.dumps(tasks)
-    print(task_json)
     Path(tasks_path).parent.mkdir(parents=True, exist_ok=True)
     Path(tasks_path).write_text(task_json)
 
