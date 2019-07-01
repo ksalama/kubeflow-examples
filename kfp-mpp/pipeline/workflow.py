@@ -37,7 +37,8 @@ def pipeline(
   dispatch_step = task_manager_op(
     operation='dispatch', task_id='dispatch-tasks')
 
-  tasks_json = str(dispatch_step.outputs['tasks'].value)
+  tasks_json = dispatch_step.outputs['tasks']
+  print(tasks_json)
   tasks_json = '{}' if tasks_json == 'None' else tasks_json
   tasks = json.loads(tasks_json)
 
