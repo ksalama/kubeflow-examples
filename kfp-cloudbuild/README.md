@@ -110,6 +110,11 @@ to deploy and run the Kubeflow pipelines:
 the defines the various build steps. This file is designed for [manual execution](https://cloud.google.com/cloud-build/docs/running-builds/start-build-manually).
 3. [build.sh](build/build.sh): This is the entry point to execute the build.
 
+### 4. [notebooks](notebooks)
+This directory includes the notebook(s) needed for interactive testing 
+and experimentation of the pipeline components, as well as submitting
+the pipeline to KFP 
+
 ## Cloud Build Steps
 
 The following diagram shows the build steps:
