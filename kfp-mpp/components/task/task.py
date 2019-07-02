@@ -57,7 +57,7 @@ def main(args):
 
   # Write output to file
   Path(args.task_id_path).parent.mkdir(parents=True, exist_ok=True)
-  Path(args.task_id_path).write_text(task_id)
+  Path(args.task_id_path).write_text(str(task_id))
 
 
 if __name__ == "__main__":
