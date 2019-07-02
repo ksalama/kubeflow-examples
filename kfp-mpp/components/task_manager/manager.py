@@ -37,7 +37,7 @@ def main(operation, **args):
     print('Dispatching complete.')
 
   # Acknowledge task completion
-  elif operation == 'acknowledge':
+  elif operation == 'ack':
     if 'task_id' not in args:
       raise ValueError('task_id has to be supplied.')
 
