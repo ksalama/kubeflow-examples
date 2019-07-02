@@ -79,8 +79,12 @@ def loop_pipeline(
 
 ):
 
+  # Dispatch tasks from tasks source
   dispatch_step = task_dispatcher_op()
 
+  # Get task arguments as list of maps
   tasks_json_ref = dispatch_step.outputs['tasks']
+  # Point to the index of the last task in the list
   task_index_ref = get_index_of_last_element_op(tasks_json_ref).output
+  # Execute the tasks by index, starting from the last one, and descending
   loop(task_index_ref, tasks_json_ref)
