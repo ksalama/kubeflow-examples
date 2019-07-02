@@ -1,0 +1,11 @@
+name: task_dispatcher
+description: Dispatch tasks
+implementation:
+  container:
+    command: ["python", "/dispatcher.py"]
+    args:
+    - --tasks-path
+    - outputPath: tasks
+    image: gcr.io/ml-cicd-template/task_manager:latest
+outputs:
+- name: tasks

@@ -23,12 +23,20 @@ steps:
   id: 'Build task Image'
 #  waitFor: ['Run Unit Tests']
 
-# Create the image for the task manager component
+# Create the image for the task dispatcher component
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
-         '-t', 'gcr.io/$_PROJECT_ID/task_manager:$_TAG', '.']
-  dir: 'kfp-mpp/components/task_manager'
-  id: 'Build Task Manager Image'
+         '-t', 'gcr.io/$_PROJECT_ID/task_dispatcher:$_TAG', '.']
+  dir: 'kfp-mpp/components/task_dispatcher'
+  id: 'Build Task Dispatcher Image'
+#  waitFor: ['Run Unit Tests']
+
+# Create the image for the task acknowledger component
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build',
+         '-t', 'gcr.io/$_PROJECT_ID/task_acknowledger:$_TAG', '.']
+  dir: 'kfp-mpp/components/task_acknowledger'
+  id: 'Build Task Acknowledger Image'
 #  waitFor: ['Run Unit Tests']
 
 # Update component specs images

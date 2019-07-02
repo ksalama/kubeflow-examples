@@ -21,8 +21,9 @@ component_store = kfp.components.ComponentStore(
   local_search_paths=['components'])
 
 # Create component ops
+task_dispatcher_op = component_store.load_component('task_dispatcher')
 exec_task_op = component_store.load_component('task')
-task_manager_op = component_store.load_component('task_manager')
+task_acknowledger_op = component_store.load_component('task_acknowledger')
 
 
 def get_index_of_last_element(list_json: str) -> int:
@@ -60,7 +61,7 @@ def loop(task_index_ref, tasks_json_ref):
   # Execute the task using the task_args
   task_step = exec_task_op(task_args=task_args)
   # Acknowledge the executed task
-  task_manager_op(operation='ack', task_id=task_step.output)
+  task_acknowledger_op(task_id=task_step.output)
   # Decrement the task_index
   next_task_index_ref = decrement_op(task_index_ref).output
   # Check that the index is not less than 0
@@ -78,8 +79,7 @@ def loop_pipeline(
 
 ):
 
-  dispatch_step = task_manager_op(
-    operation='dispatch', task_id='dispatch-tasks')
+  dispatch_step = task_dispatcher_op()
 
   tasks_json_ref = dispatch_step.outputs['tasks']
   task_index_ref = get_index_of_last_element_op(tasks_json_ref).output
