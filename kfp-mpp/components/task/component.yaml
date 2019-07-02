@@ -7,11 +7,8 @@ implementation:
     - --task-args
     - inputValue: task-args
     - outputPath: task_id
-    image: gcr.io
+    image: gcr.io/ml-cicd-template/task:latest
 inputs:
-- name: task-id
-  type: String
-  description: Task Identifier
 - name: task-args
   type: String
   description: Task arguments as dictionary

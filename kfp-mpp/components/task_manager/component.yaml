@@ -10,7 +10,7 @@ implementation:
     - inputValue: task-id
     - --tasks-path
     - outputPath: tasks
-    image: gcr.io
+    image: gcr.io/ml-cicd-template/task_manager:latest
 inputs:
 - name: operation
   type: String

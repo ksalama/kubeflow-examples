@@ -58,7 +58,7 @@ def loop(task_index_ref, tasks_json_ref):
   # Get task_args at task_index from the tasks_json
   task_args = get_element_by_index_op(task_index_ref, tasks_json_ref).output
   # Execute the task using the task_args
-  task_step = exec_task_op(task_args)
+  task_step = exec_task_op(task_args=task_args)
   # Acknowledge the executed task
   task_manager_op(operation='ack', task_id=task_step.output)
   # Decrement the task_index
