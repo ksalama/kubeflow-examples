@@ -4,12 +4,10 @@ implementation:
   container:
     command: ["python", "/task.py"]
     args:
-    - --task-id
-    - inputValue: task-id
-    - outputPath: task_id
     - --task-args
     - inputValue: task-args
-    image: gcr.io/
+    - outputPath: task_id
+    image: gcr.io
 inputs:
 - name: task-id
   type: String
