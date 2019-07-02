@@ -56,7 +56,7 @@ decrement_op = kfp.components.func_to_container_op(decrement)
 def loop(task_index_ref, tasks_json_ref):
 
   # Get task_args at task_index from the tasks_json
-  task_args = get_element_by_index_op(task_index_ref, tasks_json_ref).output
+  task_args = get_element_by_index_op(tasks_json_ref, task_index_ref).output
   # Execute the task using the task_args
   task_step = exec_task_op(task_args=task_args)
   # Acknowledge the executed task
