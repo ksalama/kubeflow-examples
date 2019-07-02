@@ -51,7 +51,7 @@ def main(args):
   task_args = json.loads(args.task_args)
   task_id = task_args.pop('task_id')
   print("Processing task {}...".format(task_id))
-  for key, value in task_args.items:
+  for key, value in task_args.items():
     print("{} = {}".format(key, value))
   print("Task complete.")
 
