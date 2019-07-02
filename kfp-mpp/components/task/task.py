@@ -56,12 +56,13 @@ def main(args):
   print("Task complete.")
 
   # Write output to file
-  Path(args.output_path).parent.mkdir(parents=True, exist_ok=True)
-  Path(args.output_path).write_text(task_id)
+  Path(args.task_id_path).parent.mkdir(parents=True, exist_ok=True)
+  Path(args.task_id_path).write_text(task_id)
 
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("--task-args", type=str)
+  parser.add_argument("--task-id-path", type=str)
   args = parser.parse_args()
   main(args)

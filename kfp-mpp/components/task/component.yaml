@@ -6,7 +6,7 @@ implementation:
     args:
     - --task-args
     - inputValue: task-args
-    - --task-id
+    - --task-id-path
     - outputPath: task_id
     image: gcr.io/ml-cicd-template/task:latest
 inputs:
