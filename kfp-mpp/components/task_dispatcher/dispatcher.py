@@ -35,7 +35,7 @@ def dispatch_tasks(tasks_path):
 
 
 def main(args):
-  dispatch_tasks(args['tasks_path'])
+  dispatch_tasks(args.tasks_path)
 
 
 if __name__ == '__main__':

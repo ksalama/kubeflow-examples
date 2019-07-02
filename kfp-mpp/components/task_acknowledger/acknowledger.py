@@ -21,8 +21,7 @@ def acknowledge_task(task_id):
 
 def main(args):
   print('Acknowledge task...')
-  task_id = args['task_id']
-  acknowledge_task(task_id)
+  acknowledge_task(args.task_id)
 
 
 if __name__ == '__main__':
